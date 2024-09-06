@@ -22,14 +22,15 @@ public class File {
     @UuidGenerator
     UUID id;
 
+
+    @Column(nullable = false)
+    private String title;
+
     @Column(nullable = false, length = 32)
     private String description;
 
     @Column(nullable = false)
     private LocalDateTime creation_date;
-
-    @Column(nullable = false)
-    private String title;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)

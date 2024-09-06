@@ -7,12 +7,14 @@ import com.example.storage.mapper.FileMapperImpl;
 import com.example.storage.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class FileServiceImpl implements FileService{
 
     private final FileRepository fileRepository;
@@ -28,7 +30,7 @@ public class FileServiceImpl implements FileService{
     @Override
     public Optional<ArrayList<FileDto>> getAll() {
         ArrayList<File> filesDto = new ArrayList<>(fileRepository.findAll(
-                Sort.by(Sort.Order.asc("creation_date"))));
+                Sort.by(Sort.Order.asc("creationDate"))));
         if (filesDto.isEmpty())
             return Optional.empty();
         else

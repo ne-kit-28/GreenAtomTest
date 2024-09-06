@@ -30,7 +30,7 @@ public class File {
     private String description;
 
     @Column(nullable = false)
-    private LocalDateTime creation_date;
+    private LocalDateTime creationDate;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)

@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: storage
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${spring.application.name}
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml

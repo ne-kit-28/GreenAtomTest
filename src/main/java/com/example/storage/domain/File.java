@@ -34,6 +34,6 @@ public class File {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(name = "file_data")
+    @Column(name = "fileData")
     private byte[] fileData;
 }

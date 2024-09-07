@@ -1,4 +1,4 @@
 databaseChangeLog:
   - include:
-      file: v2.sql
+      file: v3.sql
       relativeToChangelogFile: true

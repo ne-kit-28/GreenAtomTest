@@ -9,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class FileServiceImpl implements FileService{
@@ -29,10 +27,17 @@ public class FileServiceImpl implements FileService{
     }
 
     @Override
-    public Page<FileDto> getAll(int page, int size) {
+    public Page<FileDto> getAll(int page, int size) { // получение определенной страницы
+                                                      // с заданным количеством файлов
+
+        if (size == 0) size = 10;//Валидация вводимых данных: проверка деления на 0
+                                 // и ввод страницы без данных
         long count = fileRepository.count();
         int numOfPages = count % size == 0 ? (int)(count/size) : (int)(count/size + 1);
-        Pageable pageable = PageRequest.of(Math.min(page, numOfPages - 1), size, Sort.by(Sort.Order.asc("creationDate")));
+        page = Math.min(page, numOfPages - 1);
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(
+                Sort.Order.asc("creationDate"))); // сортировка по возрастанию по дате создания
         Page<File> filePage = fileRepository.findAll(pageable);
 
         List<FileDto> filesDto = filePage.stream()
@@ -43,14 +48,14 @@ public class FileServiceImpl implements FileService{
     }
 
     @Override
-    public Optional<FileDto> getFileById(UUID id) {
+    public Optional<FileDto> getFileById(UUID id) { // получение файла по id
         if (fileRepository.findById(id).isPresent())
             return Optional.ofNullable(fileMapper.fileToFileDto(fileRepository.findById(id).get()));
         else return Optional.empty();
     }
 
     @Override
-    public UUID createFile(FileDto fileDto) {
+    public UUID createFile(FileDto fileDto) { // создание файла
         File file = fileMapper.fileDtoToFile(fileDto);
         File savedFile = fileRepository.save(file);
         return savedFile.getId();

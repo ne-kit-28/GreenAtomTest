@@ -85,16 +85,16 @@ class FileControllerTest {
                 .build();
         idTest1 = fileService.createFile(fileDto1);
         idTest2 = fileService.createFile(fileDto2);
-        idTest3 = fileService.createFile(fileDto3);
+        idTest3 = fileService.createFile(fileDto3); // заполнение бд перед кадым тестом
     }
 
     @AfterEach
     void tearDown() {
-        fileRepository.deleteAll();
+        fileRepository.deleteAll(); // отчистка бд после каждого теста
     }
 
     @Test
-    void getFileTest() {
+    void getFileTest() { //тест получения файла по id
         Response r = given()
                 .get("/api/file/" + idTest1)
                 .then()
@@ -119,7 +119,7 @@ class FileControllerTest {
     }
 
     @Test
-    void getFilesTest() {
+    void getFilesTest() { //тест получения всех файлов
         Response r = given()
                 .queryParam("page", 0)
                 .queryParam("size", 5)
@@ -178,7 +178,7 @@ class FileControllerTest {
     }
 
     @Test
-    void createFileTest() {
+    void createFileTest() { // тест создания файла и возвращения id
 
         String body = "{\n" +
                 "  \"title\": \"The fourth file\",\n" +

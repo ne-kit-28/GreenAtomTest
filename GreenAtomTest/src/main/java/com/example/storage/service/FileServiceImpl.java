@@ -31,7 +31,7 @@ public class FileServiceImpl implements FileService{
         if (size == 0) size = 10;//Валидация вводимых данных: проверка деления на 0
                                  // и ввод страницы без данных
         long count = fileRepository.count();
-        if (count != 0) {
+        if (count != 0) { //проверка чтобы страница запроса не уходила в -1
             int numOfPages = count % size == 0 ? (int) (count / size) : (int) (count / size + 1);
             page = Math.min(page, numOfPages - 1);
         }

@@ -22,13 +22,13 @@ public class FileController {
         this.fileService = fileService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") //получение файла по id
     public ResponseEntity<FileDto> getFile(@PathVariable("id") UUID id) {
         Optional<FileDto> file = fileService.getFileById(id);
         return file.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all") //получение всех файлов на определенной странице
     public ResponseEntity<Page<FileDto>> getFiles(@RequestParam(defaultValue = "0") int page,
                                   @RequestParam(defaultValue = "10") int size) {
         Page<FileDto> files= fileService.getAll(page, size);
@@ -38,7 +38,7 @@ public class FileController {
             return ResponseEntity.ok(files);
     }
 
-    @PostMapping
+    @PostMapping // создание файла
     public ResponseEntity<UUID> createFile(@RequestBody FileDto fileDto) {
         return ResponseEntity.ok(fileService.createFile(fileDto));
     }

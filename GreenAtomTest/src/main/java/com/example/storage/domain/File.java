@@ -24,16 +24,16 @@ public class File {
 
 
     @Column(nullable = false)
-    private String title;
+    private String title; //название
 
     @Column(nullable = false, length = 32)
-    private String description;
+    private String description; //описание документа
 
     @Column(nullable = false)
-    private LocalDateTime creationDate;
+    private LocalDateTime creationDate; //дата и время отправки
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "fileData")
-    private byte[] fileData;
+    private byte[] fileData; //данные файла
 }

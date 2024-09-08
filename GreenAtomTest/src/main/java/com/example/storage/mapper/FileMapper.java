@@ -13,9 +13,9 @@ import java.util.ArrayList;
 @Mapper
 public interface FileMapper {
     @Mapping(target = "base64FileData", source = "fileData", qualifiedByName = "fileDataToBase64")
-    FileDto fileToFileDto(File file);
+    FileDto fileToFileDto(File file); //объект в DTO
     @Mapping(target = "fileData", source = "base64FileData", qualifiedByName = "base64ToFileData")
-    File fileDtoToFile(FileDto fileDto);
+    File fileDtoToFile(FileDto fileDto); //DTO в объект
 
 
     @Named("fileDataToBase64")

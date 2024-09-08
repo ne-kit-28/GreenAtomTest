@@ -19,7 +19,6 @@ public class FileServiceImpl implements FileService{
     private final FileRepository fileRepository;
     private final FileMapper fileMapper;
 
-
     @Autowired
     FileServiceImpl(FileRepository fileRepository) {
         this.fileRepository = fileRepository;
@@ -29,12 +28,13 @@ public class FileServiceImpl implements FileService{
     @Override
     public Page<FileDto> getAll(int page, int size) { // получение определенной страницы
                                                       // с заданным количеством файлов
-
         if (size == 0) size = 10;//Валидация вводимых данных: проверка деления на 0
                                  // и ввод страницы без данных
         long count = fileRepository.count();
-        int numOfPages = count % size == 0 ? (int)(count/size) : (int)(count/size + 1);
-        page = Math.min(page, numOfPages - 1);
+        if (count != 0) {
+            int numOfPages = count % size == 0 ? (int) (count / size) : (int) (count / size + 1);
+            page = Math.min(page, numOfPages - 1);
+        }
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(
                 Sort.Order.asc("creationDate"))); // сортировка по возрастанию по дате создания

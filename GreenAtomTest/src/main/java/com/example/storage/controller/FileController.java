@@ -29,10 +29,13 @@ public class FileController {
     }
 
     @GetMapping("/all")
-    public Page<FileDto> getFiles(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<FileDto>> getFiles(@RequestParam(defaultValue = "0") int page,
                                   @RequestParam(defaultValue = "10") int size) {
-
-        return fileService.getAll(page, size);
+        Page<FileDto> files= fileService.getAll(page, size);
+        if (files.getContent().isEmpty())
+            return ResponseEntity.noContent().build();
+        else
+            return ResponseEntity.ok(files);
     }
 
     @PostMapping

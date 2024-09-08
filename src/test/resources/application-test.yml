@@ -1,10 +1,5 @@
 spring:
   datasource:
     url: jdbc:tc:postgresql:15:///${spring.application.name}
-
-#  Kafka:
-#    bootstrapServers: localhost:9092
-#    producer:
-#      topic: administration
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

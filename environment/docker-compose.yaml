@@ -1,0 +1,38 @@
+services:
+  postgres:
+    build: .
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: storage
+    ports:
+      - 5432:5432
+    volumes:
+      - ../environment:/docker-entrypoint-initdb.d
+    networks:
+      - atom-network
+
+  storage:
+    container_name: storage
+    image: storage:latest
+    depends_on:
+      - postgres
+    ports:
+      - 8080:8080
+    networks:
+      - atom-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: nickit.nic098@yandex.ru
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    ports:
+      - "5050:80"
+    networks:
+      - atom-network
+
+networks:
+  atom-network:
+    driver: bridge
